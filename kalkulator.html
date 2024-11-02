@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Calculator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #222;
+      color: #fff;
+    }
+    .calculator {
+      width: 250px;
+      background: #333;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+    .display {
+      font-size: 2em;
+      padding: 20px;
+      background: #000;
+      color: #0f0;
+      text-align: right;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      animation: display-animate 0.5s ease-in-out;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .button {
+      padding: 20px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.1s;
+      color: ;
+    }
+    .button.operator {
+      background-color: #f0a500;
+    }
+    .button.number {
+      background-color: #444;
+    }
+    .button.clear {
+      background-color: #f05454;
+    }
+    .button.equal {
+      background-color: #0f9d58;
+    }
+    .button:active {
+      transform: scale(0.95);
+    }
+    .button:titik {
+      color: #0f9d58;
+    }
+    @keyframes display-animate {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button class="button clear" onclick="clearDisplay()">C</button>
+      <button class="button operator" onclick="appendOperator('/')">/</button>
+      <button class="button operator" onclick="appendOperator('*')">*</button>
+      <button class="button operator" onclick="appendOperator('-')">-</button>
+      <button class="button number" onclick="appendNumber('7')">7</button>
+      <button class="button number" onclick="appendNumber('8')">8</button>
+      <button class="button number" onclick="appendNumber('9')">9</button>
+      <button class="button operator" onclick="appendOperator('+')">+</button>
+      <button class="button number" onclick="appendNumber('4')">4</button>
+      <button class="button number" onclick="appendNumber('5')">5</button>
+      <button class="button number" onclick="appendNumber('6')">6</button>
+      <button class="button equal" onclick="calculate()">=</button>
+      <button class="button number" onclick="appendNumber('1')">1</button>
+      <button class="button number" onclick="appendNumber('2')">2</button>
+      <button class="button number" onclick="appendNumber('3')">3</button>
+      <button class="button number" onclick="appendNumber('0')" style="grid-column: span 2;">0</button>
+      <button class="button titik" onclick="appendNumber('.')">.</button>
+     
+
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+    let currentInput = '';
+    let operator = '';
+
+    function clearDisplay() {
+      currentInput = '';
+      operator = '';
+      display.textContent = '0';
+    }
+
+  
+    function appendNumber(number) {
+      currentInput += number;
+      display.textContent = currentInput;
+    }
+
+    function appendOperator(op) {
+      if (currentInput !== '') {
+        operator = currentInput + ' ' + op + ' ';
+        display.textContent = operator;
+        currentInput = '';
+      }
+    }
+
+    function calculate() {
+      try {
+        if (operator && currentInput) {
+          const result = eval(operator + currentInput);
+          display.textContent = result;
+          currentInput = result.toString();
+          operator = '';
+        }
+      } catch (error) {
+        display.textContent = 'Error';
+        currentInput = '';
+        operator = '';
+      }
+    }
+  </script>
+</body>
+</html>
+
+
